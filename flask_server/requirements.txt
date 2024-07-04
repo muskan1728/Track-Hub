@@ -1,0 +1,14 @@
+Flask
+# mysql-connector-python==8.0.28
+PyYAML
+pyjwt
+bcrypt
+flask-cors
+cryptography
+Werkzeug
+pymysql
+flask-socketio
+Flask-SQLAlchemy
+requests
+pyppeteer
+mysqlclient

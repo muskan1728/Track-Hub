@@ -1,0 +1,30 @@
+{
+    "tags": [
+      {
+        "name": "Tag1",
+        "type": "customTagType",
+        "conditions": [
+          { "event": "pageLoad", "value": "/welcome" }
+        ]
+      },
+      {
+        "name": "Tag2",
+        "type": "customTagType",
+        "conditions": [
+          { "event": "click", "value": "/element" }
+        ]
+      }
+    ],
+    "triggers": [
+      {
+        "name": "Trigger1",
+        "type": "pageLoad",
+        "conditions": []
+      },
+      {
+        "name": "Trigger2",
+        "type": "click",
+        "conditions": []
+      }
+    ]
+  }

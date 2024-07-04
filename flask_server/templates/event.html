@@ -1,0 +1,268 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        {{data}}
+        <ul id="list"></ul>
+        <script>
+            
+            var data = {{ data | tojson | safe }};
+
+             var list = document.getElementById("list");
+             list.innerHTML = '';
+             data.forEach(function(item) {
+                console.log("d",item)
+                var listItem = document.createElement("li");
+                listItem.textContent = `Event - ${item[0]} Value - ${item[1]}`;
+                list.appendChild(listItem);
+            });
+        </script>
+</body>
+</html> -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4"></script>
+
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .top-bar {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .sidebar {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            min-width: 250px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 20px;
+        }
+
+        .container {
+            margin-top: 30px;
+            margin-left: 270px;
+            /* Adjust the margin to accommodate the sidebar width */
+        }
+
+        .card {
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .fa-hand-pointer {
+            color: #007BFF;
+            font-size: 40px;
+        }
+
+        .fa-redo-alt {
+            color: #28A745;
+            font-size: 40px;
+        }
+
+        .fa-users {
+            color: #FFC107;
+            font-size: 40px;
+        }
+
+        .chart-container {
+            margin-top: 30px;
+        }
+
+        /* Print button */
+        .print-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar
+    <div class="sidebar">
+        <h2>Rana</h2>
+        <p>Admin</p>
+        <a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div> -->
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <h2>Analytics</h2>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <i class="fas fa-hand-pointer"></i>
+                    <h2 id="elementClick">Elements Click</h2>
+                    <!-- <p>$1,000,000</p> -->
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <i class="fas fa-redo-alt"></i>
+                    <h2 id="pageLoad">Window Load</h2>
+                    <!-- <p>$500,000</p> -->
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <i class="fas fa-users"></i>
+                    <h2>Customers</h2>
+                    <!-- <p>10,000</p> -->
+                </div>
+            </div>
+        </div>
+
+        <div class="row chart-container">
+            <div class="col-md-6">
+                <canvas id="salesByCountryChart"></canvas>
+            </div>
+            <div class="col-md-6">
+                <canvas id="topSellingProductsChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Pie chart for Sales by Sales Executives -->
+        <div class="row chart-container">
+            <div class="col-md-6">
+                <canvas id="salesByExecutivesChart"></canvas>
+            </div>
+            <div class="col-md-6">
+                <!-- Percentage of Sales Increment Chart -->
+                <canvas id="salesIncrementChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Print Button -->
+    <button class="print-button" onclick="window.print()"><i class="fas fa-print"></i> Print</button>
+
+    <!-- Bootstrap JS and Popper.js via CDN (for Bootstrap components) -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+
+    <script>
+        // Sample data for charts
+        var salesByCountryData = {
+            labels: ["USA", "Canada", "UK", "Bangladesh"],
+            datasets: [{
+                label: "Sales Volume",
+                data: [250000, 180000, 160000, 120000],
+                backgroundColor: ["#007BFF", "#28A745", "#FFC107", "#DC3545"],
+            }]
+        };
+
+        var topSellingProductsData = {
+            labels: ["Product A", "Product B", "Product C", "Product D", "Product E"],
+            datasets: [{
+                label: "Sales",
+                data: [3500, 2800, 2200, 1900, 1500],
+                backgroundColor: ["#007BFF", "#28A745", "#FFC107", "#DC3545", "#FF5733"],
+            }]
+        };
+
+        var salesByExecutivesData = {
+            labels: ["Sales Exec 1", "Sales Exec 2", "Sales Exec 3"],
+            datasets: [{
+                data: [250000, 180000, 160000],
+                backgroundColor: ["#007BFF", "#28A745", "#FFC107"],
+            }]
+        };
+
+        // Calculate percentage for sales increment
+        var salesIncrementData = {
+            labels: ["Sales Increment"],
+            datasets: [{
+                data: [25], // Adjust this value for the percentage you want to display
+                backgroundColor: ["#007BFF"],
+            }]
+        };
+
+        // Initialize charts
+        var salesByCountryChart = new Chart(document.getElementById("salesByCountryChart"), {
+            type: "bar",
+            data: salesByCountryData,
+        });
+
+        var topSellingProductsChart = new Chart(document.getElementById("topSellingProductsChart"), {
+            type: "horizontalBar",
+            data: topSellingProductsData,
+        });
+
+        var salesByExecutivesChart = new Chart(document.getElementById("salesByExecutivesChart"), {
+            type: "pie",
+            data: salesByExecutivesData,
+        });
+
+        var salesIncrementChart = new Chart(document.getElementById("salesIncrementChart"), {
+            type: "pie",
+            data: salesIncrementData,
+        });
+
+        var data = {{ data | tojson | safe }};
+        elementClick
+        var pageLoad = document.getElementById("pageLoad");
+        var elementClick = document.getElementById("elementClick");
+
+        // list.innerHTML = '';
+        // data.forEach(function (item) {
+        //     console.log("d", item)
+        //     var listItem = document.createElement("li");
+        //     listItem.textContent = `Event - ${item[0]} Value - ${item[1]}`;
+        //     list.appendChild(listItem);
+        // });
+        const map = {};
+        data.forEach(function (item) {
+            const [key, value] = item;
+            if (!map[key]) {
+                map[key] = []; // Initialize an empty array if the key doesn't exist in the map
+            }
+            map[key].push(value);
+
+        });
+        console.log(map)
+        pageLoad.innerHTML=map['pageLoad'].length;
+        elementClick.innerHTML=map['elementClick'].length;
+
+    </script>
+</body>

@@ -1,0 +1,23 @@
+li{
+    list-style: none;
+}
+.top-down-animation {
+    opacity: 0;
+    transform: translateY(-50px);
+    animation: slideIn 0.5s ease forwards;
+  }
+  
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* body{
+    background: #c8d2dc33;
+  } */

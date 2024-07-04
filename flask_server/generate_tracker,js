@@ -1,0 +1,56 @@
+const fs = require('fs');
+const path = require('path');
+
+const configPath = path.join(__dirname, 'tag.json');
+const config = JSON.parse(fs.readFileSync(configPath));
+
+const tagScripts = generateTagScripts(config.tags);
+const trackerScript = `(function (window, document) {
+  // Paste your dataLayer and helper functions here
+  ${tagScripts}
+})(window, document);`;
+
+fs.writeFileSync('tracker.js', trackerScript);
+// ======================
+export function generatescript(config) {
+    const tagScripts = generateTagScripts(config.tags);
+    const trackerScript = `(function (window, document) {
+  // Paste your dataLayer and helper functions here
+  ${tagScripts}
+})(window, document);`;
+
+    fs.writeFileSync('tracker.js', trackerScript);
+
+}
+
+function generateTagScripts(tags) {
+    let tagScripts = '';
+    tags.forEach(tag => {
+        tagScripts += generateTagScript(tag);
+    });
+    return tagScripts;
+}
+
+function generateTagScript(tag) {
+    return `  function fire${tag.name}Tag() {
+    // Code to fire ${tag.name} Tag
+    console.log("${tag.name} Tag fired!");
+  }
+
+  function ${tag.name}Logic() {
+    ${generateConditionsScript(tag.conditions)}
+  }`;
+}
+
+function generateConditionsScript(conditions) {
+    let conditionsScript = '';
+    conditions.forEach(condition => {
+        if (condition.event && condition.value) {
+            // Add your event-based trigger condition logic here
+            conditionsScript += `    if (event === '${condition.event}' && element === '${condition.value}') {
+          fire${condition.tag}Tag();
+      } \n`;
+        }
+    });
+    return conditionsScript;
+}

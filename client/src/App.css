@@ -1,0 +1,96 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+.top-bar {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+}
+
+
+.sidebar {
+  background-color: #333;
+  color: #fff;
+  /* padding: 20px; */
+  text-align: center;
+  min-width: 150px;
+  height: 100vh;
+  position: fixed;
+  /* top: 0; */
+  left: 0;
+}
+
+.sidebar h2 {
+  margin-bottom: 20px;
+}
+
+.container {
+  margin-top: 30px;
+  margin-left: 250px;
+  padding: 0.4em ;
+}
+/* .top-row{
+  padding-top: 2em;
+} */
+.card {
+  border: none;
+  /* box-shadow: 7px 8px 8px rgba(0, 0, 0, 0.2); */
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+  transition: 0.3s;
+  padding: 20px;
+  text-align: center;
+  width:max(200px,max-content);
+  margin-top:20px;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.fas{
+  max-width: fit-content;
+  font-size: 20px ;
+
+}
+
+.fa-hand-pointer {
+  color: #35008b;
+ 
+}
+.fa-angle-double-down{
+  color:#5c4680;
+}
+
+.fa-redo-alt {
+  color: #6638b2;
+}
+
+.fa-users {
+  color: #9a7fc5;
+}
+.fa-hourglass-half {
+  color: #8566B9;
+}
+
+.fa-eye {
+  color: #C2B2DC;
+}
+.fa-wpforms {
+  color: #321b56;
+}
+.chart-container {
+  margin-top: 30px;
+}
+
+.print-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #007BFF;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
